@@ -1,0 +1,260 @@
+What is Web Driver ?
+
+It is for web applications. Selenium WebDriver.
+
+FluentWait
+JavaScriptExecutor
+WindowPopup- WindowHandles,  Alerts
+
+
+Wait 
+- waits are to avoid execption while finding element in a webpage.
+for ajax,java script  page will take some time to load all the elements for those type of elements we use Waits
+
+Implicit Wait - it is for the WebDriver for a particular time  30 secs -
+      it will check if the element is present at 0 sec and after the full time specified.  (Element not found / stale element exception if element is not found)
+Explicit Wait - WebDriver for a particular 
+   it will check if the element is present at 0 sec , and for every 500 ms if the element is available until the time specified.
+    Fluent Wait - we can mention the polling time for waiting
+                          in fluent wait you can avoid certain exceptions
+
+driver.manage().timeouts().implicitlyWait(TimeOut, TimeUnit.SECONDS);	
+driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS) ;
+
+
+WebDriverWait wait = new WebDriverWait(WebDriverRefrence,30);
+guru99seleniumlink= wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(                   "/html/body/div[1]/section/div[2]/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/a/i")));
+ 	guru99seleniumlink.click();
+
+
+Wait wait = new FluentWait(WebDriver reference)
+.withTimeout(timeout, SECONDS)
+.pollingEvery(timeout, SECONDS)
+.ignoring(Exception.class);
+
+Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)							
+	.withTimeout(30, TimeUnit.SECONDS) 			
+	.pollingEvery(5, TimeUnit.SECONDS) 			
+	.ignoring(NoSuchElementException.class);
+
+
+
+
+JavaScriptExecutor
+-pagination
+-scrolling 
+-javascript function
+WebDriver driver=new ChromeDriver();
+((JavaScriptExecutor)driver).executeScript("Window.scrollBy(0,500)");
+((JavaScriptExecutor)driver).executeScript("document.readyState.equals('complete')");
+
+
+
+
+iFrames
+multiple html combined in one frames
+<frameset> <frames>
+defaultContent 
+switchTo
+
+rightclick --- contextClick
+
+
+
+Tables
+//*[@id="customers"]/tbody/tr[1]/th -- heading  Rows
+//*[@id="customers"]/tbody/tr[2]/td -- data
+
+For Columns
+//*[@id="customers"]/tbody/tr[2]/td[1]
+ remove the particular index for tr row
+//*[@id="customers"]/tbody/tr/td[1]
+
+findElements ---> Set
+
+
+Excel 
+--  Apache poi  , jxl- java library
+.xls  - HSSFWork
+.xlsx - XSSFWorkBook
+
+Why do we need to read and write in excel sheet?
+for data driven testing 
+- input value into the web page
+- expected output from the web page
+
+Excel - Workbook->Sheet->Row-> cell
+
+
+public void excelRead() throws IOException {
+ 	 
+ 	FileInputStream file = new FileInputStream("C:\\Users\\WBL\\Desktop\\Data.xlsx");
+ 	XSSFWorkbook wb = new XSSFWorkbook(file);
+ 	XSSFSheet sh1 = wb.getSheet("Employee");
+ 	XSSFRow row1 = sh1.getRow(0);
+ 	XSSFCell cell = row1.getCell(0);
+ 	String s = cell.getStringCellValue();
+ 	System.out.println("First cell value "+ s);
+ 	System.out.println("No of rows:"+sh1.getLastRowNum());
+ 	 
+ 	 
+ 	}
+ 	 
+ 	public void excelWrite() throws IOException{
+ 	XSSFWorkbook wb = new XSSFWorkbook();
+ 	XSSFSheet sheet1 = wb.createSheet("Employee");
+ 	XSSFRow sh1row = sheet1.createRow(0);
+ 	XSSFCell sh1cell = sh1row.createCell(0);
+ 	sh1cell.setCellValue("Enter Employee Details");
+ 	 
+ 	 
+ 	XSSFSheet sheet2 = wb.createSheet("Department");
+ 	XSSFRow sh2row = sheet2.createRow(0);
+ 	XSSFCell sh2cell = sh2row.createCell(0);
+ 	sh2cell.setCellValue("Enter Department Details");
+ 	 
+ 	FileOutputStream file = new FileOutputStream("C:\\Users\\WBL\\Desktop\\Data.xlsx");
+ 	wb.write(file);
+ 	 
+ 	System.out.println("successfully written file ");
+ 	 
+ 	}
+
+
+
+
+
+
+
+
+
+
+Tables
+Excel
+
+
+
+
+
+
+
+
+
+
+
+
+Action -----
+, List,
+iframe ------
+JavaScriptExecutor
+pagination
+infinite scrolling
+Cookie, delete cookie ----
+Tables ---- 
+
+
+cookie
+desired capabilities
+file upload
+window popup --- window handles
+Date Picker
+dimension
+
+Aug 13
+
+Auto It
+Robot
+
+Cookie
+
+Desired Capabilities
+
+headless browsers
+Date Picker
+Step 1- Click on calendar
+
+Step 2- Get all td of tables using findElements method
+
+Step 3- using for loop get text of all elements
+
+Step 4- using if else condition we will check specific date
+
+Step 5- If date is matched then click and break the loop.
+
+
+
+
+dimension
+
+
+-----------
+
+
+public class JavascriptExecutor {
+ 	 
+ 	public static void main(String[] args) {
+ 	 
+ 	System.setProperty("webdriver.chrome.driver","C:/Users/MYPC/Videos/Eclipse_webdriver_jars/chromedriver.exe");
+ 	
+WebDriver driver=new ChromeDriver();
+((JavaScriptExecutor)driver).executeScript("Window.scrollBy(0,500)");
+((JavaScriptExecutor)driver).executeScript("document.readyState.equals('complete')");
+
+
+ 	 
+ 	// driver.get("http://www.seleniumhq.org/"); or
+ 	 
+ 	driver.navigate().to("http://www.seleniumhq.org/");
+ 	 
+ 	 
+ 	//implicit wait
+ 	 
+ 	driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+ 	 
+ 	 
+ 	String xpath="//li[@id='menu_download']/a[@title='Get Selenium']";
+ 	 
+ 	 
+ 	//explicit wait----
+ 	 
+ 	WebDriverWait wait=new WebDriverWait(driver,10);
+ 	WebElement element1 =wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+ 	 
+ 	 
+ 	 
+ 	 
+ 	//Fleuent Wait------
+ 	 
+ 	Wait wait1 =new FluentWait(driver).withTimeout(05, TimeUnit.SECONDS).pollingEvery(5,TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
+ 	WebElement foo=(WebElement) wait.until(new Function()
+ 	{
+ 	public WebElement apply(WebDriver driver)
+ 	{
+ 	return driver.findElement(By.id("foo"));
+ 	}
+ 	});
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ 	WebElement element=driver.findElement(By.xpath("//li[@id='menu_download']/a[@title='Get Selenium']"));
+ 	element.click();
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ 	//driver.findElement(By.xpath("//li[@id='menu_download']/a[@title='Get Selenium']")).click();
+ 	 
+ 	//or
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ 	}
+ 	 
+ 	}
